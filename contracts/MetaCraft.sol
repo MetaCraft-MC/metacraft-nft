@@ -31,14 +31,9 @@ contract MetaCraft is ERC721Enumerable, Ownable, ReentrancyGuard {
      * @dev World Data
      */
 
-    struct LandData {
-        uint8[] features;
-    }
-
     mapping(uint256 => int32) private tokenSeeds;
     mapping(uint256 => string) public tokenMetadataIPFSHashes;
     mapping(string => uint256) private ipfsHashTokenIds;
-    mapping(uint256 => LandData) private tokenLandData;
 
     /**
      * @dev Contract Methods
@@ -125,19 +120,12 @@ contract MetaCraft is ERC721Enumerable, Ownable, ReentrancyGuard {
     struct MintData {
         uint256 _tokenId;
         int32 _seed;
-        LandData _LandData;
         string _tokenMetadataIPFSHash;
     }
 
     function mintWorld(
-        MintData calldata _mintData,
-        bytes calldata _signature // prevent alteration of intended mint data
+        MintData calldata _mintData // prevent alteration of intended mint data
     ) external nonReentrant {
-        require(
-            verifyOwnerSignature(keccak256(abi.encode(_mintData)), _signature),
-            "Invalid Signature"
-        );
-
         require(
             _mintData._tokenId > 0 && _mintData._tokenId <= mintSupplyCount,
             "Invalid token id."
@@ -161,8 +149,6 @@ contract MetaCraft is ERC721Enumerable, Ownable, ReentrancyGuard {
         } else {
             require(ownerMintCount < ownerMintReserveCount, "Owner mint limit");
         }
-
-        tokenLandData[_mintData._tokenId] = _mintData._LandData;
 
         tokenMetadataIPFSHashes[_mintData._tokenId] = _mintData
             ._tokenMetadataIPFSHash;
