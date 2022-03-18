@@ -3,7 +3,7 @@ require("@nomiclabs/hardhat-etherscan");
 require('dotenv').config();
 require('hardhat-contract-sizer');
 
-const { API_URL, PRIVATE_KEY, ETHERSCAN_API } = process.env;
+const { RINKEBY_API_URL, ROPSTEN_API_URL, PRIVATE_KEY, ETHERSCAN_API } = process.env;
 
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -24,21 +24,25 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: "0.8.4",
-  defaultNetwork: "hardhat",
+  defaultNetwork: "rinkeby",
   networks: {
     hardhat: {
     },
     rinkeby: {
-      url: API_URL,
-      accounts: [PRIVATE_KEY]
+      url: RINKEBY_API_URL,
+      accounts: [PRIVATE_KEY],
+    },
+    ropsten: {
+      url: ROPSTEN_API_URL,
+      accounts: [PRIVATE_KEY],
     }
   },
   etherscan: {
     apiKey: ETHERSCAN_API
-  },
-  contractSizer: {
-    alphaSort: true,
-    disambiguatePaths: false,
-    runOnCompile: false 
   }
+  // contractSizer: {
+  //   alphaSort: true,
+  //   disambiguatePaths: false,
+  //   runOnCompile: false 
+  // }
 };

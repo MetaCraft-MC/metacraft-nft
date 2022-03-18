@@ -20,6 +20,7 @@ async function main() {
   // uint256 _whitelistExpirationTimestamp,
   // uint256 _maxWhitelistCount,
   // uint256 _maxMintPerAddress
+  console.log("deploying metacraft nft...");
   const nft = await MetaCraft.deploy(10000, 1000, 5);
 
   await nft.deployed();

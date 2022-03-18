@@ -18,7 +18,7 @@ contract MetaCraft is ERC721Enumerable, Ownable, ReentrancyGuard {
      * @dev Mint Related
      * */
 
-    string public ipfsGateway = "https://ipfs.metacraft.com/ipfs/";
+    string public ipfsGateway = "https://cf-ipfs.com/ipfs/";
     bool public mintEnabled = false;
     uint256 public totalMinted = 0;
     uint256 public mintSupplyCount;
