@@ -123,7 +123,7 @@ contract MetaCraft is ERC721Enumerable, Ownable, ReentrancyGuard {
         string _tokenMetadataIPFSHash;
     }
 
-    function mintWorld(
+    function mintLand(
         MintData calldata _mintData // prevent alteration of intended mint data
     ) external nonReentrant {
         require(
@@ -167,6 +167,19 @@ contract MetaCraft is ERC721Enumerable, Ownable, ReentrancyGuard {
 
     function setMintEnabled(bool _enabled) external onlyOwner {
         mintEnabled = _enabled;
+    }
+
+    function burnLand(uint256 _tokenId)
+        external
+        tokenExists(_tokenId)
+        onlyOwner
+    {
+        totalMinted--;
+        ownerMintCount--;
+        delete tokenSeeds[_tokenId];
+        delete ipfsHashTokenIds[tokenMetadataIPFSHashes[_tokenId]];
+        delete tokenMetadataIPFSHashes[_tokenId];
+        _burn(_tokenId);
     }
 
     /************
